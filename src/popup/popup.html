@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>Vision</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Vision</h1>
+        <div class="master-toggle">
+          <label class="switch">
+            <input type="checkbox" id="masterToggle" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="status-banner" id="statusBanner">
+        <span id="statusText">Extension Disabled</span>
+      </div>
+
+      <div class="image-drop-area" id="dropArea">
+        <div class="drop-message" id="dropMessage">
+          <div class="icon">📷</div>
+          <p>Drag and drop an image here</p>
+          <p>or</p>
+          <button class="upload-btn" id="uploadBtn">Select image</button>
+          <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            style="display: none"
+          />
+        </div>
+        <div
+          class="preview-container"
+          id="previewContainer"
+          style="display: none"
+        >
+          <div class="preview-actions">
+            <button class="clear-btn" id="clearBtn">✖</button>
+          </div>
+          <img id="imagePreview" src="" alt="Preview" />
+        </div>
+      </div>
+
+      <div class="explanation-area" id="explanationArea" style="display: none">
+        <h3>Explanation:</h3>
+        <div class="loading-spinner" id="loadingSpinner" style="display: none">
+          <div class="spinner"></div>
+          <p>Processing image...</p>
+        </div>
+        <div class="explanation-text" id="explanationText"></div>
+      </div>
+
+      <div class="model-status">
+        <span id="modelStatusText">Model: Not loaded</span>
+        <span
+          class="model-spinner"
+          id="modelSpinner"
+          style="display: none"
+        ></span>
+      </div>
+
+      <div class="footer">
+        <span class="version">v1.0 by sleepydirt</span>
+      </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

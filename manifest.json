@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "Vision",
+  "version": "1.0",
+  "description": "Fully local, browser-only Vision Language Model inference.",
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "src/popup/popup.html"
+  },
+  "options_page": "src/popup/popup.html",
+  "content_security_policy": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+}
