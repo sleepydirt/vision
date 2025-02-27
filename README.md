@@ -12,7 +12,12 @@ A GPU with at least 2GB of VRAM and 8GB of system RAM is recommended for best pe
 
 Vision is a simple extension that allows users to either drag and drop/upload an image file for VLM inference. By default, the model is prompted to explain the given image.
 
+![vision-extension-demo](https://github.com/user-attachments/assets/d76e42fc-dca8-4c84-a4c3-e17ce4106b61)
+
 A universal switch helps to minimise unnecessary resource usage, as the model is only loaded into memory when the extension is swtiched on.
+
+![vision-extension-switch](https://github.com/user-attachments/assets/95e1c6cf-5d08-44f8-9372-64c87468c35a)
+
 
 ## Deploying locally
 
@@ -21,7 +26,8 @@ To deploy locally, download the latest release and unzip it. Navigate to `chrome
 ## Adjustments
 
 1. Quants
-   To achieve best performance, the following default quantization settings are recommended:
+ 
+To achieve best performance, the following default quantization settings are recommended:
 
 - Decoder model: `q4`
 - Token embeddings: `int8`
@@ -30,13 +36,16 @@ To deploy locally, download the latest release and unzip it. Navigate to `chrome
 To experiment with other quants, you can refer to 🤗 <a href="https://huggingface.co/docs/transformers.js/en/guides/dtypes">Using quantized models (dtypes)</a>
 
 2. Prompt
-   The default prompt is `Describe this image.`, however changing this to `Explain this image.` makes the model output relevant factual information (although prone to hallucination) instead of simply describing the image visually.
+   
+The default prompt is `Describe this image.`, however changing this to `Explain this image.` makes the model output relevant factual information (although prone to hallucination) instead of simply describing the image visually.
 
 3. Model
-   By default, `device: WebGPU` is used for model inference, which is supported on most modern browsers. On older hardware/browsers, inference might default to `device: cpu`, which is much slower. To avoid long processing times, it is recommended that a small vision model be used with quantization. In this implementation, Qwen2-VL-2B-Instruct is used as I was able to find a pre-configured repo on HuggingFace for the ONNX weights. For other models, you might need to perform manual conversion of weights. Note that `.safetensors` and `.gguf` weights are not supported here.
+   
+By default, `device: WebGPU` is used for model inference, which is supported on most modern browsers. On older hardware/browsers, inference might default to `device: cpu`, which is much slower. To avoid long processing times, it is recommended that a small vision model be used with quantization. In this implementation, Qwen2-VL-2B-Instruct is used as I was able to find a pre-configured repo on HuggingFace for the ONNX weights. For other models, you might need to perform manual conversion of weights. Note that `.safetensors` and `.gguf` weights are not supported here.
 
 4. Output
-   For fast inference, the model output is limited to a maximum of 1024 tokens. This can be adjusted depending on your preference.
+   
+For fast inference, the model output is limited to a maximum of 1024 tokens. This can be adjusted depending on your preference.
 
 ```js
 const outputs = await model.generate({
@@ -47,7 +56,7 @@ const outputs = await model.generate({
 
 ## Issues
 
-Right now, turning off the extension calls `model.dispose()`, but upon testing this does not seem to free up resources. This is unintended, and can lead to a memory leak. For now, the only fix is to close and reopen the browser.
+Right now, turning off the extension calls `model.dispose()`, which should force garbage collection, but upon testing this does not seem to free up resources. This is unintended, and can lead to a memory leak. For now, the only fix is to close and reopen the browser.
 
 ## Credits
 
