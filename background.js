@@ -57,7 +57,6 @@ async function unloadModel() {
           "Error during model dispose, continuing cleanup:",
           disposeError
         );
-        // Continue with cleanup despite this error
       }
       model = null;
     }
@@ -79,10 +78,22 @@ async function unloadModel() {
     // Clear any cached data
     pendingRequests = {};
 
-    // Force a garbage collection hint
+    // Force garbage collection and WebGPU resource cleanup
     setTimeout(() => {
-      const temp = new Array(1000).fill("cleanup");
+      // Create and release large arrays to trigger GC
+      const temp = new Array(100000).fill("cleanup");
       temp.length = 0;
+
+      // Request explicit GPU resource cleanup
+      if (navigator.gpu) {
+        navigator.gpu.requestAdapter().then((adapter) => {
+          if (adapter) {
+            adapter.requestDevice().then((device) => {
+              device.destroy();
+            });
+          }
+        });
+      }
     }, 100);
 
     console.log("Model cleanup completed");
