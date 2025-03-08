@@ -55,8 +55,8 @@ const outputs = await model.generate({
 
 ## Issues
 
-[*] Memory leak when spamming the main on/off toggle
-[ ] Trying to load a different model does not free up resources used by the previous model
+- [x] Memory leak when spamming the main on/off toggle
+- [ ] Trying to load a different model does not free up resources used by the previous model
 
 Right now, turning off the extension calls `model.dispose()`, which should force garbage collection, but upon testing this does not seem to free up resources. For now, the only way to free up memory and VRAM is to close and reopen the browser.
 
